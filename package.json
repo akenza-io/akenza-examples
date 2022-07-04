@@ -1,0 +1,25 @@
+{
+  "name": "akenza-examples",
+  "version": "1.0.0",
+  "description": "Examples for using the akenza API.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async-mqtt": "^2.6.2",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "es-main": "^1.2.0",
+    "mqtt": "^4.3.7",
+    "ws": "^8.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0"
+  }
+}
