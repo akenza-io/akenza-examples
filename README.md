@@ -36,6 +36,7 @@ cp .env.template .env
 - Fill in the information
 - (optional) [Create a new HTTP device](https://docs.akenza.io/how-to-connect-a-device) (required for sending data via HTTP)
 - (optional) [Create a new MQTT device](https://docs.akenza.io/how-to-connect-a-device) (required for sending data via MQTT)
+- Run `npm install`
 
 ## Usage
 
