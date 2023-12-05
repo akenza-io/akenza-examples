@@ -14,6 +14,7 @@
   "dependencies": {
     "async-mqtt": "^2.6.2",
     "axios": "^0.27.2",
+    "coap": "^1.3.0",
     "dotenv": "^16.0.1",
     "es-main": "^1.2.0",
     "mqtt": "^4.3.7",
