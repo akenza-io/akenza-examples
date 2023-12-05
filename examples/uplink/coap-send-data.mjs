@@ -6,7 +6,7 @@ import path from "path";
 import { isRunDirectly } from "../utils.mjs";
 import coap from "coap";
 config({
-  path: process.env.CONFIG_PATH || path.resolve(process.cwd(), ".env.develop"),
+  path: process.env.CONFIG_PATH || path.resolve(process.cwd(), ".env"),
 });
 
 const coapDeviceId = process.env.COAP_DEVICE_ID;
