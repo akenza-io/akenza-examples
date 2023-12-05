@@ -17,6 +17,7 @@ examples/
 │   ├── get-devices.mjs                 Retrieve a set of devices.
 │   └── get-tags.mjs                    Retrieve a set of tags.
 ├── uplink
+│   ├── coap-send-data.mjs              Send an COAP uplink.
 │   ├── http-send-data.mjs              Send an HTTP uplink.
 │   ├── mqtt-send-data-tls.mjs          Send an MQTT uplink using TLS.
 │   └── mqtt-send-data.mjs              Send an MQTT uplink.
