@@ -3,13 +3,13 @@
  */
 import coap from "coap";
 import { isRunDirectly } from "../utils.mjs";
+import { generateSensorReading } from "./iot-data.mjs";
 
 const coapDeviceId = process.env.COAP_DEVICE_ID;
 const uplinkSecret = process.env.COAP_UPLINK_SECRET;
 const hostname = process.env.COAP_HOST || "coap.akenza.io";
 
-export async function sendData(value) {
-  const payload = { co2: value };
+export async function sendData(payload = generateSensorReading()) {
   console.log(`sending ${JSON.stringify(payload)} for device ${coapDeviceId}`);
   // https://github.com/coapjs/node-coap?tab=readme-ov-file#requestrequestparams
   const req = coap.request({
@@ -30,6 +30,6 @@ export async function sendData(value) {
 }
 
 if (isRunDirectly(import.meta)) {
-  const res = await sendData(780);
+  const res = await sendData();
   console.log(`response: code=${res.code} payload=${res.payload}`);
 }

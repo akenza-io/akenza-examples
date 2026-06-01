@@ -4,6 +4,7 @@
 import crypto from "crypto";
 import axios from "axios";
 import { isRunDirectly } from "../utils.mjs";
+import { generateSensorReading } from "./iot-data.mjs";
 
 const deviceId = process.env.HTTP_SAS_DEVICE_ID;
 const deviceConnectorId = process.env.HTTP_SAS_DEVICE_CONNECTOR_ID;
@@ -41,7 +42,7 @@ export async function sendData() {
     deviceId,
   );
   const url = `${baseUrl}/v3/capture?deviceId=${deviceId}&topic=default&sasToken=${token}`;
-  const body = { co2: 780 };
+  const body = generateSensorReading();
   console.log(`sending ${JSON.stringify(body)} for device ${deviceId}`);
   const response = await axios.post(url, body, {
     headers: { "Content-Type": "application/json" },

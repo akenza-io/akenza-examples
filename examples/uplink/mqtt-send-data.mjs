@@ -3,6 +3,7 @@
  */
 import mqtt from "mqtt";
 import { isRunDirectly } from "../utils.mjs";
+import { generateSensorReading } from "./iot-data.mjs";
 
 const mqttBrokerUrl = process.env.MQTT_BROKER_URL;
 const username = process.env.MQTT_USERNAME;
@@ -11,7 +12,7 @@ const deviceId = process.env.MQTT_DEVICE_ID;
 
 export async function sendData() {
   const topic = `/up/${password}/id/${deviceId}`;
-  const body = { co2: 780 };
+  const body = generateSensorReading();
   const client = await mqtt.connectAsync(`tcp://${mqttBrokerUrl}:1883`, {
     connectTimeout: 5_000,
     reconnectPeriod: 0,
