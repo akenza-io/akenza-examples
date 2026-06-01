@@ -9,11 +9,14 @@ config({
   path: process.env.CONFIG_PATH || path.resolve(process.cwd(), ".env"),
 });
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const coapDeviceId = process.env.COAP_DEVICE_ID;
 const uplinkSecret = process.env.COAP_UPLINK_SECRET;
 const hostname = process.env.COAP_HOST || "coap.akenza.io";
 
-export async function sendData() {
+export async function sendData(value) {
+  // https://github.com/coapjs/node-coap?tab=readme-ov-file#requestrequestparams
   const options = {
     hostname: hostname,
     port: 5683,
@@ -24,7 +27,7 @@ export async function sendData() {
       "Content-Format": "application/json",
     },
   };
-  const payload = { co2: 780 };
+  const payload = { co2: value };
 
   console.log(
     `sending device data ${JSON.stringify(
@@ -51,6 +54,8 @@ export async function sendData() {
 }
 
 if (isRunDirectly(import.meta)) {
-  const res = await sendData();
-  console.log(`data sent, received the following code: ${res.code}`);
-}
+    const res = await sendData(780);
+    console.log(
+      `data sent, received the following code: ${res.code} and payload: ${res.payload}`
+    );
+  }

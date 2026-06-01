@@ -12,7 +12,8 @@ const mqttBrokerUrl = process.env.MQTT_BROKER_URL;
 const username = process.env.MQTT_USERNAME;
 const password = process.env.MQTT_PASSWORD;
 const deviceId = process.env.MQTT_DEVICE_ID;
-const topic = `/up/${password}/id/${deviceId}`;
+// const topic = `/up/${password}/id/${deviceId}`;
+const topic = `up/${password}/id/${deviceId}`;
 
 var options = {
   connectTimeout: 5 * 1000,
