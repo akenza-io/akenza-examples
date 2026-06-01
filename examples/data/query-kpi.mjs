@@ -11,6 +11,9 @@ import { isRunDirectly } from "../utils.mjs";
 const apiKey = process.env.API_KEY;
 const akenzaDeviceId = process.env.AKENZA_DEVICE_ID;
 const baseUrl = process.env.BASE_URL || "https://api.akenza.io";
+const options = {
+  headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+};
 
 export async function queryKpi({
   topic = "default",
@@ -28,9 +31,7 @@ export async function queryKpi({
   console.log(
     `querying ${accumulator}(${dataKey}) for device ${akenzaDeviceId}`,
   );
-  const response = await axios.post(url, body, {
-    headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
-  });
+  const response = await axios.post(url, body, options);
   return response.data;
 }
 

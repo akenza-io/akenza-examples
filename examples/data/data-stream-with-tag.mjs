@@ -20,7 +20,6 @@ const ws = new WebSocket(`${wsBaseUrl}/v3/data-streams?xApiKey=${apiKey}`, {
 ws.on("open", () => {
   console.log("connected to akenza data stream");
   const payload = JSON.stringify({ type: "subscribe", id: 1, subscriptions });
-  console.log(`subscribing with ${Buffer.byteLength(payload, "utf8")} bytes`);
   ws.send(payload, (err) => {
     console.log(err ? "could not subscribe" : "subscribed");
   });

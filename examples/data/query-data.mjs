@@ -7,6 +7,9 @@ import { isRunDirectly } from "../utils.mjs";
 const apiKey = process.env.API_KEY;
 const akenzaDeviceId = process.env.AKENZA_DEVICE_ID;
 const baseUrl = process.env.BASE_URL || "https://api.akenza.io";
+const options = {
+  headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+};
 
 export async function queryData() {
   const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
@@ -19,9 +22,7 @@ export async function queryData() {
   };
 
   console.log(`querying device data: ${url}`);
-  const response = await axios.post(url, body, {
-    headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
-  });
+  const response = await axios.post(url, body, options);
   return response.data;
 }
 

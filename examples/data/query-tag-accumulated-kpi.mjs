@@ -7,6 +7,9 @@ import { isRunDirectly } from "../utils.mjs";
 
 const apiKey = process.env.API_KEY;
 const baseUrl = process.env.BASE_URL || "https://api.akenza.io";
+const options = {
+  headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+};
 
 export async function queryTagKpi(
   tagId,
@@ -25,9 +28,7 @@ export async function queryTagKpi(
   const body = { topic, dataKey, accumulator, interval: { from, to } };
 
   console.log(`querying ${accumulator}(${dataKey}) across tag ${tagId}`);
-  const response = await axios.post(url, body, {
-    headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
-  });
+  const response = await axios.post(url, body, options);
   return response.data;
 }
 

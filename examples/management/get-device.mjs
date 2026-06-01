@@ -6,19 +6,21 @@ import { isRunDirectly } from "../utils.mjs";
 
 const apiKey = process.env.API_KEY;
 const baseUrl = process.env.BASE_URL || "https://api.akenza.io";
-const headers = { "x-api-key": apiKey, "Content-Type": "application/json" };
+const options = {
+  headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+};
 
 export async function loadDeviceById(akenzaDeviceId) {
   const url = `${baseUrl}/v3/devices/${akenzaDeviceId}`;
   console.log(`getting device: ${url}`);
-  const response = await axios.get(url, { headers });
+  const response = await axios.get(url, options);
   return response.data;
 }
 
 export async function loadDeviceByDeviceId(deviceId) {
   const url = `${baseUrl}/v3/devices/by-device-id?deviceId=${deviceId}`;
   console.log(`getting device: ${url}`);
-  const response = await axios.get(url, { headers });
+  const response = await axios.get(url, options);
   return response.data;
 }
 

@@ -8,6 +8,9 @@ import { loadDevices } from "../management/get-devices.mjs";
 
 const apiKey = process.env.API_KEY;
 const baseUrl = process.env.BASE_URL || "https://api.akenza.io";
+const options = {
+  headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+};
 
 export async function queryBatch(
   deviceIds,
@@ -34,9 +37,7 @@ export async function queryBatch(
   console.log(
     `batch querying ${accumulator}(${dataKey}) for ${deviceIds.length} device(s)`,
   );
-  const response = await axios.post(url, body, {
-    headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
-  });
+  const response = await axios.post(url, body, options);
   return response.data;
 }
 
