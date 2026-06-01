@@ -5,11 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-node",
+      "type": "node",
       "request": "launch",
       "name": "Launch Current File",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${file}"
+      "program": "${file}",
+      "env": {
+        "CONFIG_PATH": ".env"
+      }
     }
   ]
 }

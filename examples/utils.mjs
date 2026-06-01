@@ -1,4 +1,10 @@
+import { config } from "dotenv";
+import path from "path";
 import esMain from "es-main";
+
+config({
+  path: process.env.CONFIG_PATH || path.resolve(process.cwd(), ".env"),
+});
 
 export async function loadAllEntities(loadFunc) {
   let pageNumber = 0;
@@ -7,16 +13,12 @@ export async function loadAllEntities(loadFunc) {
   while (hasNext) {
     const page = await loadFunc(pageNumber);
     hasNext = !page.last;
-    pageNumber = pageNumber + 1;
-    entities.push.apply(entities, page.content);
+    pageNumber++;
+    entities.push(...page.content);
   }
-
   return entities;
 }
 
-/**
- * Returns true if the file was invoked directly.
- */
 export function isRunDirectly(meta) {
   return esMain(meta);
 }

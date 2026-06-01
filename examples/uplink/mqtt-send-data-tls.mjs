@@ -1,46 +1,34 @@
 /**
  * Example to send an uplink via MQTT using TLS for a device.
  */
-import mqtt from "async-mqtt";
-import { config } from "dotenv";
-import path from "path";
-config({
-  path: process.env.CONFIG_PATH || path.resolve(process.cwd(), ".env"),
-});
+import mqtt from "mqtt";
+import { isRunDirectly } from "../utils.mjs";
 
 const mqttBrokerUrl = process.env.MQTT_BROKER_URL;
 const username = process.env.MQTT_USERNAME;
 const password = process.env.MQTT_PASSWORD;
 const deviceId = process.env.MQTT_DEVICE_ID;
-// const topic = `/up/${password}/id/${deviceId}`;
-const topic = `up/${password}/id/${deviceId}`;
 
-var options = {
-  connectTimeout: 5 * 1000,
-  reconnectPeriod: 0,
-  clientId: "akenza-example",
-  username: username,
-  password: password,
-};
-const body = { co2: 780 };
-const client = await mqtt.connectAsync(
-  `tls://${mqttBrokerUrl}:8883`,
-  options,
-  false
-);
+export async function sendData() {
+  const topic = `/up/${password}/id/${deviceId}`; // or `up/${password}/id/${deviceId}`
+  const body = { co2: 780 };
+  const client = await mqtt.connectAsync(`tls://${mqttBrokerUrl}:8883`, {
+    connectTimeout: 5_000,
+    reconnectPeriod: 0,
+    clientId: "akenza-example",
+    username,
+    password,
+  });
 
-client.on("error", (err) => {
-  console.log(`error while sending data to MQTT broker ${err}`);
-});
+  client.on("error", (err) => {
+    console.error(`MQTT error: ${err}`);
+  });
 
-try {
-  await client.publish(topic, JSON.stringify(body));
-  console.log(
-    `successfully published message to broker ${mqttBrokerUrl} for user ${username}`
-  );
+  await client.publishAsync(topic, JSON.stringify(body));
+  console.log(`published to ${mqttBrokerUrl} for user ${username}`);
+  await client.endAsync();
+}
 
-  await client.end();
-} catch (e) {
-  console.log(e.stack);
-  process.exit();
+if (isRunDirectly(import.meta)) {
+  await sendData();
 }
